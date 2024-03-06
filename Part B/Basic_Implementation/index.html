@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple E-commerce Frontend</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f4f4f4;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    #products, #cart {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .product, .cart-item {
+      background-color: #fff;
+      border-radius: 8px;
+      padding: 10px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .product p, .cart-item p {
+      margin: 0;
+    }
+
+    .product button, .cart-item button {
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .product button:hover, .cart-item button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <h1>Products</h1>
+  <div id="products"></div>
+  
+  <h1>Cart</h1>
+  <div id="cart"></div>
+
+  <script>
+    // Fetch products from server
+    fetch('http://localhost:3000/products')
+      .then(response => response.json())
+      .then(products => {
+        const productsDiv = document.getElementById('products');
+        products.forEach(product => {
+          const productDiv = document.createElement('div');
+          productDiv.classList.add('product');
+          productDiv.innerHTML = `
+            <p>${product.name} - $${product.price}</p>
+            <button onclick="addToCart(${product.id})">Add to Cart</button>
+          `;
+          productsDiv.appendChild(productDiv);
+        });
+      });
+
+    // Function to add product to cart
+    function addToCart(productId) {
+      const userId = 1; // Assuming user ID 1 for simplicity
+      fetch(`http://localhost:3000/cart/${userId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ productId, quantity: 1 })
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        // Refresh cart display
+        showCart();
+      });
+    }
+
+    // Function to show cart
+    function showCart() {
+      const userId = 1; // Assuming user ID 1 for simplicity
+      fetch(`http://localhost:3000/cart/${userId}`)
+        .then(response => response.json())
+        .then(cart => {
+          const cartDiv = document.getElementById('cart');
+          cartDiv.innerHTML = '';
+          if (Object.keys(cart).length === 0) {
+            cartDiv.innerHTML = '<p>Cart is empty</p>';
+          } else {
+            for (const productId in cart) {
+              const cartItemDiv = document.createElement('div');
+              cartItemDiv.classList.add('cart-item');
+              cartItemDiv.innerHTML = `
+                <p>Product ID: ${productId}, Quantity: ${cart[productId]}</p>
+                <button onclick="removeFromCart(${productId})">Remove from Cart</button>
+              `;
+              cartDiv.appendChild(cartItemDiv);
+            }
+          }
+        });
+    }
+
+    // Function to remove product from cart
+    function removeFromCart(productId) {
+      const userId = 1; // Assuming user ID 1 for simplicity
+      fetch(`http://localhost:3000/cart/${userId}/item/${productId}`, {
+        method: 'DELETE'
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        // Refresh cart display
+        showCart();
+      });
+    }
+
+    // Initial cart display
+    showCart();
+  </script>
+</body>
+</html>

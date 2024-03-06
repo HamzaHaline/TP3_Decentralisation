@@ -1,0 +1,43 @@
+[
+    {
+      "id": 1,
+      "name": "T-shirt",
+      "description": "Comfortable cotton t-shirt",
+      "price": 19.99,
+      "category": "Clothing",
+      "stock": 50
+    },
+    {
+      "id": 2,
+      "name": "Jeans",
+      "description": "Classic blue denim jeans",
+      "price": 29.99,
+      "category": "Clothing",
+      "stock": 30
+    },
+    {
+      "id": 3,
+      "name": "Running Shoes",
+      "description": "Lightweight running shoes",
+      "price": 49.99,
+      "category": "Footwear",
+      "stock": 20
+    },
+    {
+      "id": 4,
+      "name": "Smartphone",
+      "description": "High-performance smartphone",
+      "price": 399.99,
+      "category": "Electronics",
+      "stock": 15
+    },
+    {
+      "id": 5,
+      "name": "Headphones",
+      "description": "Wireless over-ear headphones",
+      "price": 79.99,
+      "category": "Electronics",
+      "stock": 25
+    }
+  ]
+  
