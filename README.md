@@ -10,7 +10,7 @@
 - Sainan BI
 - Lancine CONDE
 - Steve TEDOM
-- Shangzho lou
+- Shangzhi LOU
 
 ### Summary:
 This workshop explores the concepts of Data Redundancy and Distributed Computing. It begins by distinguishing between decentralized computing and distributed computing, elucidating their characteristics and applications.
